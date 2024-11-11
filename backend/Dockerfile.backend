@@ -1,0 +1,18 @@
+# Sử dụng image python phiên bản 3.9 làm base
+FROM python:3.9
+
+# Đặt thư mục làm việc mặc định
+WORKDIR /app
+
+# Sao chép requirements.txt vào image và cài đặt dependencies
+COPY ./backend/requirements.txt /app/backend/requirements.txt
+RUN pip install -r backend/requirements.txt
+
+# Sao chép toàn bộ mã nguồn của backend vào image
+COPY ./backend /app/backend
+
+# Mở cổng 8000 để FastAPI có thể lắng nghe các request
+EXPOSE 8000
+
+# CMD để chạy FastAPI với Uvicorn khi container được khởi động
+CMD ["python", "./backend/main.py"]
